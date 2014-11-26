@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainScreenController">
+   <children>
+      <MenuBar prefHeight="30.0" prefWidth="800.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem fx:id="close" mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <TabPane layoutX="34.0" layoutY="32.0" prefHeight="570.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="32.0">
+        <tabs>
+          <Tab text="Folders">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="createFolderButton" layoutX="320.0" layoutY="80.0" mnemonicParsing="false" text="Create" />
+                        <Button fx:id="editFolderButton" layoutX="297.0" layoutY="134.0" mnemonicParsing="false" text="Edit" />
+                        <Button fx:id="deleteFolderButton" layoutX="352.0" layoutY="134.0" mnemonicParsing="false" text="Delete" />
+                        <Label layoutX="20.0" layoutY="45.0" prefHeight="42.0" prefWidth="664.0" text="Create a new folder to store your games in." />
+                        <Label layoutX="20.0" layoutY="15.0" text="Folder management">
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                        </Label>
+                        <TableView fx:id="folderTable" layoutY="180.0" prefHeight="250.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                          <columns>
+                            <TableColumn fx:id="folderName" prefWidth="350.0" text="Folder name" />
+                            <TableColumn fx:id="folderType" prefWidth="350.0" text="Folder type" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Tags">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="deleteTagButton" layoutX="352.0" layoutY="134.0" mnemonicParsing="false" text="Delete" />
+                        <Button fx:id="editTagButton" layoutX="297.0" layoutY="134.0" mnemonicParsing="false" text="Edit" />
+                        <Button fx:id="createTagButton" layoutX="320.0" layoutY="80.0" mnemonicParsing="false" text="Create" />
+                        <Label layoutX="20.0" layoutY="15.0" text="Tag management">
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="20.0" layoutY="45.0" prefHeight="42.0" prefWidth="664.0" text="Create a new tag to sort your games by." />
+                        <TableView fx:id="tagTable" layoutY="180.0" prefHeight="250.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                          <columns>
+                            <TableColumn fx:id="tagName" prefWidth="125.0" text="Tag name" />
+                            <TableColumn fx:id="games" prefWidth="575.0" text="Games" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="Games">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="gameTable" prefHeight="430.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                          <columns>
+                            <TableColumn fx:id="gameNameColumn" prefWidth="234.0" text="Name" />
+                            <TableColumn fx:id="primaryTag" prefWidth="233.0" text="Primary Tag" />
+                              <TableColumn fx:id="secondaryTag" prefWidth="233.0" text="Secondary Tag" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

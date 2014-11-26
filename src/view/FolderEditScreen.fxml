@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FolderEditScreenController">
+   <children>
+      <TextField fx:id="folderNameField" layoutX="70.0" layoutY="50.0" prefHeight="30.0" prefWidth="260.0" promptText="Enter a Folder name" />
+      <Label layoutX="350.0" layoutY="55.0" text="Give a name to the selected folder" />
+      <ComboBox fx:id="tagSelect" layoutX="70.0" layoutY="160.0" prefWidth="260.0" promptText="Select a Tag" />
+      <Label fx:id="typeOfTagText" layoutX="350.0" layoutY="165.0" text="Select a tag for this selected folder to sort by" />
+      <Button fx:id="saveButton" layoutX="283.0" layoutY="250.0" mnemonicParsing="false" text="Save" />
+      <Button fx:id="cancelButton" layoutX="353.0" layoutY="250.0" mnemonicParsing="false" text="Cancel" />
+      <RadioButton fx:id="dynamic" layoutX="158.0" layoutY="113.0" mnemonicParsing="false" text="Dynamic" />
+      <RadioButton fx:id="tag" layoutX="70.0" layoutY="113.0" mnemonicParsing="false" text="Tag" />
+   </children>
+</AnchorPane>
