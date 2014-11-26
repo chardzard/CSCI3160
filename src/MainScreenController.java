@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import model.Folder;
+import model.FolderType;
 import model.Game;
 import model.Tag;
 import javafx.collections.FXCollections;
@@ -51,9 +52,9 @@ public class MainScreenController
 	@FXML
 	private TableColumn<Game, String> secondaryTag;
 	private Runner main;
-	private HashSet<Folder> folders;
+	private ArrayList<Folder> folders;
 	private ArrayList<Tag> tags;
-	private HashSet<Game> gameList;
+	private ArrayList<Game> gameList;
 
 	@FXML
 	void initialize()
@@ -69,11 +70,29 @@ public class MainScreenController
 		createFolderButton.setOnAction(new EventHandler<ActionEvent>()
 		{
 			@Override
-			public void handle(ActionEvent arg0)
+			public void handle(ActionEvent event)
 			{
 				try
 				{
-					main.showFolder();
+					main.showFolder(new Folder("", FolderType.TAG));
+				} catch(IOException e)
+				{
+					e.printStackTrace();
+				}
+				setFolders(main.getFolders());
+			}
+		});
+		editFolderButton.setOnAction(new EventHandler<ActionEvent>()
+		{
+			@Override
+			public void handle(ActionEvent event)
+			{
+				try
+				{
+					Folder select = folderTable.getSelectionModel().getSelectedItem();
+					if(select != null)
+						main.showFolder(new Folder("", FolderType.TAG));
+					else event.consume();
 				} catch(IOException e)
 				{
 					e.printStackTrace();
@@ -92,6 +111,7 @@ public class MainScreenController
 				{
 					e.printStackTrace();
 				}
+				setTags(main.getTags());
 			}
 		});
 		editTagButton.setOnAction(new EventHandler<ActionEvent>()
@@ -122,31 +142,42 @@ public class MainScreenController
 				else event.consume();
 			}
 		});
-		folderName.setCellValueFactory(new PropertyValueFactory<Folder, String>("name"));
-		folderType.setCellValueFactory(new PropertyValueFactory<Folder, String>("type"));
-		tagName.setCellValueFactory(new PropertyValueFactory<Tag, String>("name"));
-		games.setCellValueFactory(new PropertyValueFactory<Tag, String>("gameNames"));
-		gameNameColumn.setCellValueFactory(new PropertyValueFactory<Game, String>("name"));
-		primaryTag.setCellValueFactory(new PropertyValueFactory<Game, String>("primaryTag"));
-		secondaryTag.setCellValueFactory(new PropertyValueFactory<Game, String>("secondaryTag"));
+		folderName
+				.setCellValueFactory(new PropertyValueFactory<Folder, String>(
+						"name"));
+		folderType
+				.setCellValueFactory(new PropertyValueFactory<Folder, String>(
+						"type"));
+		tagName.setCellValueFactory(new PropertyValueFactory<Tag, String>(
+				"name"));
+		games.setCellValueFactory(new PropertyValueFactory<Tag, String>(
+				"gameNames"));
+		gameNameColumn
+				.setCellValueFactory(new PropertyValueFactory<Game, String>(
+						"name"));
+		primaryTag.setCellValueFactory(new PropertyValueFactory<Game, String>(
+				"primaryTag"));
+		secondaryTag
+				.setCellValueFactory(new PropertyValueFactory<Game, String>(
+						"secondaryTag"));
 	}
 
 	public void setMain(Runner main)
 	{
 		this.main = main;
 	}
-	
-	public void setFolders(HashSet<Folder> folders)
+
+	public void setFolders(ArrayList<Folder> folders)
 	{
 		this.folders = folders;
-		HashSet<String> toShow = new HashSet<String>();
+		ArrayList<String> toShow = new ArrayList<String>();
 		for(Folder f: folders)
 		{
 			toShow.add(f.nameProperty().get());
 		}
 		folderTable.setItems(FXCollections.observableArrayList(folders));
 	}
-	
+
 	public void setTags(ArrayList<Tag> tags)
 	{
 		this.tags = tags;
@@ -157,8 +188,8 @@ public class MainScreenController
 		}
 		tagTable.setItems(FXCollections.observableArrayList(tags));
 	}
-	
-	public void setGamesList(HashSet<Game> list)
+
+	public void setGamesList(ArrayList<Game> list)
 	{
 		this.gameList = list;
 		gameTable.setItems(FXCollections.observableArrayList(gameList));

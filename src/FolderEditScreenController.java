@@ -40,24 +40,29 @@ public class FolderEditScreenController
 	void initialize()
 	{
 		tag.selectedProperty().set(true);
-		currentFolder.setType(FolderType.TAG);
 		saveButton.setOnAction(new EventHandler<ActionEvent>()
 		{
 			@Override
-			public void handle(ActionEvent arg0)
+			public void handle(ActionEvent event)
 			{
-				Node source = (Node) arg0.getSource();
+				Node source = (Node) event.getSource();
 				Stage stage = (Stage) source.getScene().getWindow();
+				
+				currentFolder.nameProperty().set(folderNameField.getText());
+				
 				stage.close();
 			}
 		});
 		cancelButton.setOnAction(new EventHandler<ActionEvent>()
 		{
 			@Override
-			public void handle(ActionEvent arg0)
+			public void handle(ActionEvent event)
 			{
-				Node source = (Node) arg0.getSource();
+				Node source = (Node) event.getSource();
 				Stage stage = (Stage) source.getScene().getWindow();
+				
+				currentFolder = null;
+				
 				stage.close();
 			}
 		});
@@ -123,5 +128,10 @@ public class FolderEditScreenController
 			dynamic.selectedProperty().set(true);
 			tag.selectedProperty().set(false);
 		}
+	}
+	
+	public Folder getFolder()
+	{
+		return currentFolder;
 	}
 }

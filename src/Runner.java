@@ -2,7 +2,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Scanner;
 import model.Folder;
 import model.FolderType;
@@ -18,9 +17,9 @@ import javafx.stage.Stage;
 public class Runner extends Application
 {
 	private Stage primaryStage;
-	private HashSet<Game> games;
+	private ArrayList<Game> games;
 	private ArrayList<Tag> tags;
-	private HashSet<Folder> folders;
+	private ArrayList<Folder> folders;
 
 	public static void main(String[] args)
 	{
@@ -50,38 +49,55 @@ public class Runner extends Application
 		primaryStage.show();
 	}
 
-	public void showFolder() throws IOException
+	public void showFolder(Folder f) throws IOException
 	{
+		int index = folders.indexOf(f);
 		FXMLLoader load = new FXMLLoader();
 		load.setLocation(Runner.class.getResource("view/FolderEditScreen.fxml"));
 		AnchorPane main = (AnchorPane) load.load();
 		FolderEditScreenController control = load.getController();
 		control.setMain(this);
 		control.setTags(tags);
+		control.setFolder(f);
 		Scene scene = new Scene(main);
 		Stage newStage = new Stage();
 		newStage.setScene(scene);
-		newStage.show();
+		newStage.showAndWait();
+		Folder change = control.getFolder();
+		if(index != -1)
+			folders.set(index, change);
+		else if(change == null)
+			return;
+		else folders.add(change);
 	}
 
 	public void showTag(Tag t) throws IOException
 	{
+		int index = tags.indexOf(t);
 		FXMLLoader load = new FXMLLoader();
 		load.setLocation(Runner.class.getResource("view/TagEditScreen.fxml"));
 		AnchorPane main = (AnchorPane) load.load();
 		TagEditScreenController control = load.getController();
 		control.setMain(this);
+		for(int i = 0; i<games.size(); i++)
+			games.get(i).selectProperty().set(false);
 		control.setListOfGames(games);
 		control.setCurrentTag(t);
 		Scene scene = new Scene(main);
 		Stage newStage = new Stage();
 		newStage.setScene(scene);
-		newStage.show();
+		newStage.showAndWait();
+		Tag change = control.getCurrentTag();
+		if(index != -1)
+			tags.set(index, change);
+		else if(change == null)
+			return;
+		else tags.add(change);
 	}
 
 	public void loadData() throws FileNotFoundException
 	{
-		games = new HashSet<Game>();
+		games = new ArrayList<Game>();
 		tags = new ArrayList<Tag>();
 		Scanner file = new Scanner(new File("Games.txt"));
 		while(file.hasNext())
@@ -93,14 +109,14 @@ public class Runner extends Application
 			games.add(game);
 			if(!tags.contains(tag))
 				tags.add(tag);
-			for(int i = 0; i<tags.size(); i++)
+			for(int i = 0; i < tags.size(); i++)
 			{
 				if(tags.get(i).equals(tag))
 					tags.get(i).addGame(game);
-			}		
+			}
 		}
 		file.close();
-		folders = new HashSet<Folder>();
+		folders = new ArrayList<Folder>();
 		file = new Scanner(new File("Folders.txt"));
 		while(file.hasNext())
 		{
@@ -109,6 +125,21 @@ public class Runner extends Application
 			folders.add(folder);
 		}
 		file.close();
+	}
+
+	public ArrayList<Tag> getTags()
+	{
+		return tags;
+	}
+
+	public ArrayList<Folder> getFolders()
+	{
+		return folders;
+	}
+
+	public ArrayList<Game> getGames()
+	{
+		return games;
 	}
 
 	public void close()

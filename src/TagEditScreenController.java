@@ -1,4 +1,4 @@
-import java.util.HashSet;
+import java.util.ArrayList;
 import model.Game;
 import model.Tag;
 import javafx.collections.FXCollections;
@@ -32,7 +32,7 @@ public class TagEditScreenController
 	@FXML
 	private Button cancel;
 	private Runner main;
-	private HashSet<Game> listOfGames;
+	private ArrayList<Game> listOfGames;
 	private Tag currentTag;
 
 	@FXML
@@ -60,6 +60,15 @@ public class TagEditScreenController
 			{
 				Node  source = (Node)  arg0.getSource(); 
 			    Stage stage  = (Stage) source.getScene().getWindow();
+			    
+			    currentTag.nameProperty().set(tagNameField.getText());
+			    
+			    for(Game g: listOfGames)
+			    {
+			    	if(g.selectProperty().get())
+			    		currentTag.addGame(g);
+			    }
+			    
 			    stage.close();
 			}
 		});
@@ -85,12 +94,12 @@ public class TagEditScreenController
 		return main;
 	}
 	
-	public HashSet<Game> getListOfGames()
+	public ArrayList<Game> getListOfGames()
 	{
 		return listOfGames;
 	}
 
-	public void setListOfGames(HashSet<Game> listOfGames)
+	public void setListOfGames(ArrayList<Game> listOfGames)
 	{
 		this.listOfGames = listOfGames;
 		ObservableList<Game> table = FXCollections
@@ -112,5 +121,10 @@ public class TagEditScreenController
 				}
 			}
 		}
+	}
+	
+	public Tag getCurrentTag()
+	{
+		return currentTag;
 	}
 }
